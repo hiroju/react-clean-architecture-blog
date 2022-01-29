@@ -1,7 +1,8 @@
 import { EntityPost } from 'entities/post'
+import { PaginationResult } from 'types/pagination'
 
 export interface IServicePost {
-  getPosts(): Promise<EntityPost[]>
+  getPosts(page: number, perPage: number): Promise<PaginationResult<EntityPost>>
 }
 
 export class UsecasePost {
@@ -9,7 +10,7 @@ export class UsecasePost {
   constructor(postService: IServicePost) {
     this.postService = postService
   }
-  getPosts() {
-    return this.postService.getPosts()
+  getPosts(page: number, perPage: number = 10) {
+    return this.postService.getPosts(page, perPage)
   }
 }
