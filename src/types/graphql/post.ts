@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
-export const getPosts = gql`
-  query GetPosts($offset: Int!, $size: Int!) {
+export const Posts = gql`
+  query Posts($offset: Int!, $size: Int!) {
     posts(where: { offsetPagination: { offset: $offset, size: $size } }) {
       nodes {
         id
