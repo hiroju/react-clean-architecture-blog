@@ -1,28 +1,27 @@
 import { Box } from '@chakra-ui/react'
+import { PostDetailContent } from 'components/post/detail-content'
 import { useQuery } from 'react-query'
-import { ServicePost } from 'services/post'
-import { UsecasePost } from 'usecases/post'
+import { TemplateHeaderPage } from 'templates/header-page'
+import { usecasePost } from 'usecases/instances'
 
 export const Posts = () => {
-  const servicePost = new ServicePost()
-  const usecasePost = new UsecasePost(servicePost)
   const { data, isLoading } = useQuery(['posts'], async () => {
     return await usecasePost.getPosts(1)
   })
   if (isLoading) <div>...loading</div>
   console.log('data', data)
   const posts = data?.nodes || []
-
-  return (
-    <div>
+  const content = (
+    <PostDetailContent>
       {posts &&
         posts.map((post) => (
-          <Box p={'12'} key={post.id}>
+          <Box key={post.id}>
             <p>{post.title}</p>
           </Box>
         ))}
-    </div>
+    </PostDetailContent>
   )
+  return <TemplateHeaderPage content={content} />
 }
 
 export default Posts
